@@ -13,6 +13,14 @@
 		783DFF4620FCD35400866790 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 783DFF4520FCD35400866790 /* Assets.xcassets */; };
 		783DFF4920FCD35400866790 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 783DFF4720FCD35400866790 /* LaunchScreen.storyboard */; };
 		783DFF5420FCD35400866790 /* FlickrFindrTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783DFF5320FCD35400866790 /* FlickrFindrTests.swift */; };
+		783DFF5F20FCE2FD00866790 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783DFF5E20FCE2FD00866790 /* Constants.swift */; };
+		783DFF6020FCE2FD00866790 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783DFF5E20FCE2FD00866790 /* Constants.swift */; };
+		783DFF6220FCE90500866790 /* api_key.txt in Resources */ = {isa = PBXBuildFile; fileRef = 783DFF6120FCE90400866790 /* api_key.txt */; };
+		783DFF6320FCE90500866790 /* api_key.txt in Resources */ = {isa = PBXBuildFile; fileRef = 783DFF6120FCE90400866790 /* api_key.txt */; };
+		783DFF6520FCF2A900866790 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783DFF6420FCF2A900866790 /* NetworkManager.swift */; };
+		783DFF6620FCF2A900866790 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783DFF6420FCF2A900866790 /* NetworkManager.swift */; };
+		783DFF6820FD0B0200866790 /* PhotosModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783DFF6720FD0B0200866790 /* PhotosModel.swift */; };
+		783DFF6920FD0B0200866790 /* PhotosModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783DFF6720FD0B0200866790 /* PhotosModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +44,10 @@
 		783DFF4F20FCD35400866790 /* FlickrFindrTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlickrFindrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		783DFF5320FCD35400866790 /* FlickrFindrTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrFindrTests.swift; sourceTree = "<group>"; };
 		783DFF5520FCD35400866790 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		783DFF5E20FCE2FD00866790 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		783DFF6120FCE90400866790 /* api_key.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = api_key.txt; sourceTree = "<group>"; };
+		783DFF6420FCF2A900866790 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		783DFF6720FD0B0200866790 /* PhotosModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +95,10 @@
 				783DFF4520FCD35400866790 /* Assets.xcassets */,
 				783DFF4720FCD35400866790 /* LaunchScreen.storyboard */,
 				783DFF4A20FCD35400866790 /* Info.plist */,
+				783DFF5E20FCE2FD00866790 /* Constants.swift */,
+				783DFF6120FCE90400866790 /* api_key.txt */,
+				783DFF6420FCF2A900866790 /* NetworkManager.swift */,
+				783DFF6720FD0B0200866790 /* PhotosModel.swift */,
 			);
 			path = FlickrFindr;
 			sourceTree = "<group>";
@@ -180,6 +196,7 @@
 				783DFF4920FCD35400866790 /* LaunchScreen.storyboard in Resources */,
 				783DFF4620FCD35400866790 /* Assets.xcassets in Resources */,
 				783DFF4420FCD35300866790 /* Main.storyboard in Resources */,
+				783DFF6220FCE90500866790 /* api_key.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -187,6 +204,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				783DFF6320FCE90500866790 /* api_key.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,8 +215,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				783DFF6520FCF2A900866790 /* NetworkManager.swift in Sources */,
+				783DFF6820FD0B0200866790 /* PhotosModel.swift in Sources */,
 				783DFF4120FCD35300866790 /* ViewController.swift in Sources */,
 				783DFF3F20FCD35300866790 /* AppDelegate.swift in Sources */,
+				783DFF5F20FCE2FD00866790 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,7 +227,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				783DFF6620FCF2A900866790 /* NetworkManager.swift in Sources */,
 				783DFF5420FCD35400866790 /* FlickrFindrTests.swift in Sources */,
+				783DFF6920FD0B0200866790 /* PhotosModel.swift in Sources */,
+				783DFF6020FCE2FD00866790 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
