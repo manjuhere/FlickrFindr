@@ -13,8 +13,9 @@ class ViewController: UIViewController {
     @IBOutlet var searchBar: UISearchBar!
     private var collectionView : UICollectionView!
     private var flowLayout : UICollectionViewFlowLayout!
-
     var searchNavBtn: UIBarButtonItem!
+    
+    let photosManager = PhotosManager()
     var photosData : [Photo]! = [] {
         didSet {
             DispatchQueue.main.async {
@@ -28,7 +29,6 @@ class ViewController: UIViewController {
         self.searchBar.delegate = self
         searchNavBtn = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(self.showSearchBar))
         self.resetNavBar(title: "FlickrFindr")
-        
         self.setupCollectionView()
     }
     
@@ -45,13 +45,14 @@ class ViewController: UIViewController {
         self.collectionView.register(UINib.init(nibName: "PhotoCell", bundle: nil), forCellWithReuseIdentifier: PhotoCell.identifier)
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.prefetchDataSource = self
     }
 
     @objc func showSearchBar() {
         self.navigationItem.titleView = self.searchBar
         self.navigationItem.title = nil
         self.navigationItem.rightBarButtonItem = nil
-        
+        self.searchBar.becomeFirstResponder()
         // show recent searches
         // show a tableview under the navbar for half the screen size.
         // this can be a containerVC which can be added and removed
@@ -79,7 +80,7 @@ extension ViewController : UISearchBarDelegate {
         // add searchTerm to recently used
         // remove container view
         // reload collection view
-        NetworkManager().fetchPhotos(searchText: searchBar.text!) { (success, message, data) in
+        NetworkManager().fetchPhotosData(searchText: searchBar.text!) { (success, message, data) in
             guard success == true else {
                 //alert with message
                 return
@@ -89,7 +90,7 @@ extension ViewController : UISearchBarDelegate {
     }
 }
 
-extension ViewController : UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension ViewController : UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.photosData.count
     }
@@ -98,7 +99,32 @@ extension ViewController : UICollectionViewDataSource, UICollectionViewDelegate,
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCell.identifier, for: indexPath) as? PhotoCell else {
             fatalError("Cell Not found")
         }
-        cell.titleLabel.text = photosData[indexPath.row].title
+        let photo = photosData[indexPath.row]
+        cell.photo = photo
+        if let imgData = photosManager.fetchedPhotoData(for: photo) {
+            cell.configure(with: photo, imgData: imgData)
+        } else {
+            cell.configure(with: nil, imgData: nil)
+            photosManager.asyncFetchPhoto(photo) { (data) in
+                DispatchQueue.main.async {
+                    guard cell.photo == photo else {
+                        return
+                    }
+                    cell.configure(with: photo, imgData: data)
+                }
+            }
+        }
+        
         return cell
+    }
+}
+
+extension ViewController : UICollectionViewDataSourcePrefetching {
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        // Begin asynchronously fetching data for the requested index paths.
+        for indexPath in indexPaths {
+            let photo = photosData[indexPath.row]
+            photosManager.asyncFetchPhoto(photo, completion: nil)
+        }
     }
 }

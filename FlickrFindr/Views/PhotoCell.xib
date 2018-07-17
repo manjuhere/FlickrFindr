@@ -13,33 +13,55 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="PhotoCell" customModule="FlickrFindr" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+            <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qVQ-Jw-qpm">
-                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TQg-dz-035">
+                        <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
+                    </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GAT-Dj-8C7">
+                        <rect key="frame" x="0.0" y="139" width="180" height="41"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You are allowed to use any open-source " lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qVQ-Jw-qpm">
+                                <rect key="frame" x="4" y="0.0" width="172" height="41"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="41" id="7sB-wn-wSZ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.37055522200000002" green="0.37056469920000001" blue="0.37055957319999999" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="qVQ-Jw-qpm" firstAttribute="leading" secondItem="GAT-Dj-8C7" secondAttribute="leading" constant="4" id="1yV-cC-Fwv"/>
+                            <constraint firstAttribute="height" secondItem="qVQ-Jw-qpm" secondAttribute="height" id="2ic-k6-gCT"/>
+                            <constraint firstAttribute="trailing" secondItem="qVQ-Jw-qpm" secondAttribute="trailing" constant="4" id="jq0-Ba-lGb"/>
+                            <constraint firstAttribute="bottom" secondItem="qVQ-Jw-qpm" secondAttribute="bottom" id="t5h-9w-T4H"/>
+                        </constraints>
+                    </view>
                 </subviews>
             </view>
             <constraints>
-                <constraint firstItem="qVQ-Jw-qpm" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="14r-E8-wtc"/>
-                <constraint firstAttribute="trailing" secondItem="qVQ-Jw-qpm" secondAttribute="trailing" id="BGY-2X-K3d"/>
-                <constraint firstAttribute="bottom" secondItem="qVQ-Jw-qpm" secondAttribute="bottom" id="Pzm-0G-RXx"/>
-                <constraint firstItem="qVQ-Jw-qpm" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="kbO-pH-dVa"/>
+                <constraint firstItem="TQg-dz-035" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="C3s-Lx-1rk"/>
+                <constraint firstAttribute="trailing" secondItem="TQg-dz-035" secondAttribute="trailing" id="Hez-jN-xZU"/>
+                <constraint firstItem="TQg-dz-035" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="PiP-Qq-HX0"/>
+                <constraint firstAttribute="bottom" secondItem="GAT-Dj-8C7" secondAttribute="bottom" id="aU6-es-Qo4"/>
+                <constraint firstAttribute="trailing" secondItem="GAT-Dj-8C7" secondAttribute="trailing" id="bfK-E1-tUk"/>
+                <constraint firstItem="GAT-Dj-8C7" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="ldD-nD-TxR"/>
+                <constraint firstAttribute="bottom" secondItem="TQg-dz-035" secondAttribute="bottom" id="t5T-kA-7nt"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
-            <size key="customSize" width="121" height="147"/>
+            <size key="customSize" width="173" height="199"/>
             <connections>
+                <outlet property="photoView" destination="TQg-dz-035" id="Rq3-GT-Kq5"/>
                 <outlet property="titleLabel" destination="qVQ-Jw-qpm" id="5nP-tc-HOo"/>
             </connections>
-            <point key="canvasLocation" x="69.5" y="102.5"/>
+            <point key="canvasLocation" x="95" y="136"/>
         </collectionViewCell>
     </objects>
 </document>
