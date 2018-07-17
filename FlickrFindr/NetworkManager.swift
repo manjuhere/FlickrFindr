@@ -9,7 +9,7 @@
 import Foundation
 
 class NetworkManager {
-    func fetchPhotos(searchText: String) {
+    func fetchPhotos(searchText: String, dataFetched : @escaping (_ success: Bool, _ message: String?, _ photosData : [Photo]?) -> Void) {
         let url = APIConfig().getSearchURL(searchText: searchText)
         let task = URLSession.shared.dataTask(with: URL(string: url)!) { (data, response, error) in
             if error != nil {
@@ -23,6 +23,11 @@ class NetworkManager {
                 do {
                     let photosData = try JSONDecoder().decode(PhotosData.self, from: data!)
                     print(photosData)
+                    if photosData.stat == "ok" {
+                        dataFetched(true, nil, photosData.photos.photo)
+                    } else if photosData.stat == "fail" {
+                        dataFetched(false, "Something went wrong", nil)
+                    }
                 } catch {
                     print("JSON decoding failed")
                 }

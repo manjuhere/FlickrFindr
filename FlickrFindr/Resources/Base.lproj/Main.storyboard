@@ -22,7 +22,7 @@
                                 <rect key="frame" x="138" y="279" width="99" height="109.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="fj5-6Y-ZA8">
-                                        <rect key="frame" x="0.0" y="23" width="48.5" height="63"/>
+                                        <rect key="frame" x="0.0" y="23.5" width="48.5" height="63"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Flick" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KC4-nk-Bbw">
                                                 <rect key="frame" x="0.0" y="0.0" width="48.5" height="31.5"/>
@@ -66,7 +66,7 @@
                     <textInputTraits key="textInputTraits"/>
                 </searchBar>
             </objects>
-            <point key="canvasLocation" x="826" y="-664"/>
+            <point key="canvasLocation" x="824.79999999999995" y="-664.31784107946032"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="t4L-lI-lGq">

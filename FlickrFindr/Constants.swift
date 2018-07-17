@@ -35,7 +35,8 @@ struct APIConfig {
     private let API_PARAM_SAFE_SEARCH = "&safe_search=1"
 
     func getSearchURL(searchText: String) -> String {
-        let searchParam = "&text=\(searchText)"
+        var searchParam = "&text=\(searchText)"
+        searchParam = searchParam.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
         let URL = API_ENDPOINT + API_PARAM_METHOD + API_PARAM_KEY + API_PARAM_RESP_FORMAT + API_PARAM_NO_CALLBACK + API_PARAM_SAFE_SEARCH + searchParam
         return URL
     }
