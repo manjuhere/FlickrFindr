@@ -36,8 +36,13 @@ struct Photo: Codable, Hashable {
 }
 
 class PhotosManager {
+    
     private var photosCache = NSCache<NSString, NSData>()
     
+    private func getPhotoCacheKey(_ photo: Photo) -> NSString {
+        return NSString(string: "https://farm\(photo.farm).static.flickr.com/\(photo.server)/\(photo.id)_\(photo.secret).jpg")
+    }
+
     func fetchedPhotoData(for photo: Photo) -> Data? {
         let cachedPhotoKey = self.getPhotoCacheKey(photo)
         if let cachedPhotoData = photosCache.object(forKey: cachedPhotoKey) {
@@ -67,8 +72,5 @@ class PhotosManager {
         }
     }
 
-    private func getPhotoCacheKey(_ photo: Photo) -> NSString {
-        return NSString(string: "https://farm\(photo.farm).static.flickr.com/\(photo.server)/\(photo.id)_\(photo.secret).jpg")
-    }
     
 }

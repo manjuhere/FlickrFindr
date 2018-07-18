@@ -34,10 +34,14 @@ struct APIConfig {
     private let API_PARAM_NO_CALLBACK = "&nojsoncallback=1"
     private let API_PARAM_SAFE_SEARCH = "&safe_search=1"
 
-    func getSearchURL(searchText: String) -> String {
+    func getSearchURL(searchText: String, page: Int? = nil) -> String {
         var searchParam = "&text=\(searchText)"
         searchParam = searchParam.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
-        let URL = API_ENDPOINT + API_PARAM_METHOD + API_PARAM_KEY + API_PARAM_RESP_FORMAT + API_PARAM_NO_CALLBACK + API_PARAM_SAFE_SEARCH + searchParam
+        var URL = API_ENDPOINT + API_PARAM_METHOD + API_PARAM_KEY + API_PARAM_RESP_FORMAT + API_PARAM_NO_CALLBACK + API_PARAM_SAFE_SEARCH + searchParam
+        if page != nil {
+            let pageParam = "&page=\(page!)"
+            URL = URL + pageParam
+        }
         return URL
     }
     

@@ -11,11 +11,14 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet var searchBar: UISearchBar!
+    private var searchNavBtn: UIBarButtonItem!
     private var collectionView : UICollectionView!
     private var flowLayout : UICollectionViewFlowLayout!
-    var searchNavBtn: UIBarButtonItem!
+    private var searchTerm : String!
     
-    let photosManager = PhotosManager()
+    private let photosManager = PhotosManager()
+    private let networkManager = NetworkManager()
+    
     var photosData : [Photo]! = [] {
         didSet {
             DispatchQueue.main.async {
@@ -26,6 +29,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.networkManager.delegate = self
         self.searchBar.delegate = self
         searchNavBtn = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(self.showSearchBar))
         self.resetNavBar(title: "FlickrFindr")
@@ -53,12 +57,6 @@ class ViewController: UIViewController {
         self.navigationItem.title = nil
         self.navigationItem.rightBarButtonItem = nil
         self.searchBar.becomeFirstResponder()
-        // show recent searches
-        // show a tableview under the navbar for half the screen size.
-        // this can be a containerVC which can be added and removed
-        // VC within containerVC holds the tableview.
-        // this class is a delegate of VC and when didSelectRowAtIndexPath of tableview
-        // pass on to this VC via delegate : fire the API in here, remove containerVC & reload collectionView
     }
     
     @objc func resetNavBar(title: String?) {
@@ -66,7 +64,6 @@ class ViewController: UIViewController {
         self.navigationItem.title = title
         self.navigationItem.rightBarButtonItem = searchNavBtn
     }
-    
 }
 
 extension ViewController : UISearchBarDelegate {
@@ -76,28 +73,28 @@ extension ViewController : UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         self.resetNavBar(title: searchBar.text)
-        // fire the api
-        // add searchTerm to recently used
-        // remove container view
-        // reload collection view
-        NetworkManager().fetchPhotosData(searchText: searchBar.text!) { (success, message, data) in
-            guard success == true else {
-                //alert with message
-                return
-            }
-            self.photosData = data
-        }
+        self.networkManager.setSearchText(searchBar.text!)
+        self.photosData.removeAll()
+        self.networkManager.fetchPhotosData()
     }
 }
 
-extension ViewController : UICollectionViewDataSource, UICollectionViewDelegate {
+extension ViewController : UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.photosData.count
     }
     
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        // Begin asynchronously fetching data for the requested index paths.
+        for indexPath in indexPaths {
+            let photo = photosData[indexPath.row]
+            photosManager.asyncFetchPhoto(photo, completion: nil)
+        }
+    }
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCell.identifier, for: indexPath) as? PhotoCell else {
-            fatalError("Cell Not found")
+            fatalError("Cell of type - \(PhotoCell.self) Not found")
         }
         let photo = photosData[indexPath.row]
         cell.photo = photo
@@ -114,17 +111,26 @@ extension ViewController : UICollectionViewDataSource, UICollectionViewDelegate 
                 }
             }
         }
-        
         return cell
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        if offsetY > contentHeight - scrollView.frame.height * 3 {
+            if !self.networkManager.isBeingFetched {
+                self.networkManager.fetchPhotosData()
+            }
+        }
     }
 }
 
-extension ViewController : UICollectionViewDataSourcePrefetching {
-    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        // Begin asynchronously fetching data for the requested index paths.
-        for indexPath in indexPaths {
-            let photo = photosData[indexPath.row]
-            photosManager.asyncFetchPhoto(photo, completion: nil)
+extension ViewController : NetworkManagerDelegate {
+    func dataFetched(success: Bool, message: String?, data: [Photo]?) {
+        guard success == true else {
+            self.showToast(error: message!)
+            return
         }
+        self.photosData.append(contentsOf: data!)
     }
 }
