@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7800E9A720FF66F20027F299 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 7800E9A620FF66F20027F299 /* README.md */; };
 		783DFF3F20FCD35300866790 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783DFF3E20FCD35300866790 /* AppDelegate.swift */; };
 		783DFF4120FCD35300866790 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783DFF4020FCD35300866790 /* ViewController.swift */; };
 		783DFF4420FCD35300866790 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 783DFF4220FCD35300866790 /* Main.storyboard */; };
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7800E9A620FF66F20027F299 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.markdown; };
 		783DFF3B20FCD35300866790 /* FlickrFindr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlickrFindr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		783DFF3E20FCD35300866790 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		783DFF4020FCD35300866790 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -79,6 +81,7 @@
 		783DFF3220FCD35300866790 = {
 			isa = PBXGroup;
 			children = (
+				7800E9A620FF66F20027F299 /* README.md */,
 				783DFF3D20FCD35300866790 /* FlickrFindr */,
 				783DFF5220FCD35400866790 /* FlickrFindrTests */,
 				783DFF3C20FCD35300866790 /* Products */,
@@ -245,6 +248,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7800E9A720FF66F20027F299 /* README.md in Resources */,
 				783DFF4920FCD35400866790 /* LaunchScreen.storyboard in Resources */,
 				783DFF4620FCD35400866790 /* Assets.xcassets in Resources */,
 				783DFF4420FCD35300866790 /* Main.storyboard in Resources */,
