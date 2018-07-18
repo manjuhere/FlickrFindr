@@ -1,5 +1,5 @@
 //
-//  NetworkManager.swift
+//  SearchManager.swift
 //  FlickrFindr
 //
 //  Created by Manjunath Chandrashekar on 16/07/18.
@@ -9,25 +9,35 @@
 import Foundation
 import UIKit
 
-protocol NetworkManagerDelegate : class {
+/// Delegates to notify new Search Data and change in recent searches
+protocol SearchManagerDelegate : class {
     func dataFetched(success: Bool, message: String?, data: [Photo]?)
+    func recentSearchesChanged()
 }
 
-class NetworkManager {
+class SearchManager {
     
-    private var searchText : String!
+    var searchText : String! {
+        didSet { // reset page related data as it is a new search
+            self.totalPages = nil
+            self.requestPage = 1
+        }
+    }
     private var totalPages : Int!
     private var requestPage : Int = 1
     
-    var isBeingFetched : Bool = false
-    weak var delegate : NetworkManagerDelegate?
+    var isBeingFetched : Bool = false // flag to not fire multiple requests
+    weak var delegate : SearchManagerDelegate?
     
-    func setSearchText(_ text: String) {
-        self.searchText = text
-        self.totalPages = nil
-        self.requestPage = 1
-    }
+    var recentSearches : [String] = {
+        guard let searches = UserDefaults.standard.array(forKey: StorageKeys.RecentSearches.rawValue) as? [String] else {
+            return []
+        }
+        return searches
+    }()
     
+    
+    /// Fetches all photo related data for a given search Term. Also considers paging internally
     func fetchPhotosData() {
         guard searchText != nil, !searchText!.isEmpty else {
             return
@@ -79,17 +89,17 @@ class NetworkManager {
         task.resume()
     }
     
+    /// Private function to store successful searches into user defaults.
     private func storeSearch() {
-        guard var searches = UserDefaults.standard.array(forKey: "recentSearches") as? [String] else {
-            return
-        }
-        if !searches.contains(self.searchText) {
-            searches.append(searchText)
+        if !recentSearches.contains(searchText) {
+            recentSearches.insert(searchText, at: 0)
         } else {
-            searches.swapAt(0, searches.index(of: searchText)!)
+            recentSearches.remove(at: recentSearches.index(of: searchText)!)
+            recentSearches.insert(searchText, at: 0)
         }
-        UserDefaults.standard.set(searches, forKey: "recentSearches")
+        UserDefaults.standard.set(recentSearches, forKey: StorageKeys.RecentSearches.rawValue)
         UserDefaults.standard.synchronize()
+        self.delegate?.recentSearchesChanged()
     }
     
 }

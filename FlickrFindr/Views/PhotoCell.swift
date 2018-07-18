@@ -25,6 +25,7 @@ class PhotoCell: UICollectionViewCell {
     }
 
     func configure(with photo: Photo?, imgData: Data?) {
+        self.backgroundColor = UIColor.init(displayP3Red: 24/255.0, green: 25/255.0, blue: 27/255.0, alpha: 1.0)
         self.titleLabel.text = photo?.title
         self.photoView.image = (imgData != nil) ? UIImage(data: imgData!) : nil
     }

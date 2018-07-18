@@ -43,6 +43,11 @@ class PhotosManager {
         return NSString(string: "https://farm\(photo.farm).static.flickr.com/\(photo.server)/\(photo.id)_\(photo.secret).jpg")
     }
 
+    
+    /// Fetch photo image data from cache.
+    ///
+    /// - Parameter photo: A Photo Model object
+    /// - Returns: Returns a Data object of photo image
     func fetchedPhotoData(for photo: Photo) -> Data? {
         let cachedPhotoKey = self.getPhotoCacheKey(photo)
         if let cachedPhotoData = photosCache.object(forKey: cachedPhotoKey) {
@@ -51,6 +56,12 @@ class PhotosManager {
         return nil
     }
 
+    
+    /// Function to fetch the imageData of a given photo asynchronously, or from cache if it exists
+    ///
+    /// - Parameters:
+    ///   - photo: A Photo Model object
+    ///   - completion: Returns a Data object of photo image
     func asyncFetchPhoto(_ photo: Photo, completion : ((_ photoData : Data?) -> Void)? ) {
         if let data = self.fetchedPhotoData(for: photo){
             if completion != nil {

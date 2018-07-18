@@ -8,6 +8,11 @@
 
 import Foundation
 
+// UserDefaults keys
+enum StorageKeys : String {
+    case RecentSearches = "RecentSearches"
+}
+
 
 struct APIConfig {
     
@@ -34,6 +39,13 @@ struct APIConfig {
     private let API_PARAM_NO_CALLBACK = "&nojsoncallback=1"
     private let API_PARAM_SAFE_SEARCH = "&safe_search=1"
 
+    
+    /// Build Search URL using query parameters and given search inputs
+    ///
+    /// - Parameters:
+    ///   - searchText: A string which is to be searched
+    ///   - page: corresponding page of search result to be fetched. By default fetches the first page
+    /// - Returns: Returns a fully formed URL by combining all parameters.
     func getSearchURL(searchText: String, page: Int? = nil) -> String {
         var searchParam = "&text=\(searchText)"
         searchParam = searchParam.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!

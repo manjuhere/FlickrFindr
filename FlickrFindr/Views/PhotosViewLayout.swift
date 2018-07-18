@@ -24,13 +24,12 @@ class ColumnFlowLayout: UICollectionViewFlowLayout {
         } else {
             numOfItems = 2 //portrait mode - 2 rows
         }
+        // calculate row size by eliminating safeArea and contentInsets
         let availWidth = cv.bounds.width - (cv.safeAreaInsets.left + cv.safeAreaInsets.right) - (cv.contentInset.left + cv.contentInset.right)
         let itemSpacingWidth = self.minimumInteritemSpacing * CGFloat(numOfItems)
         let cellWidth = floor((availWidth - itemSpacingWidth) / CGFloat(numOfItems))
         self.itemSize = CGSize(width: cellWidth , height: cellWidth)
 
-        self.headerReferenceSize = CGSize.init(width: cv.bounds.width, height: 30.0)
-        self.sectionInset = UIEdgeInsetsMake(8.0, 0.0, 50.0, 0.0)
         self.sectionInsetReference = .fromSafeArea
     }
 }
