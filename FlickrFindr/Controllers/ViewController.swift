@@ -11,6 +11,8 @@ import UIKit
 class ViewController: UIViewController {
 
     // MARK: - Properties
+    @IBOutlet weak var logoView: UIStackView!
+    @IBOutlet weak var getStartedLabel: UILabel!
     @IBOutlet var searchBar: UISearchBar!
     private var searchNavBtn: UIBarButtonItem!
     private var recentsList : UITableView!
@@ -38,6 +40,18 @@ class ViewController: UIViewController {
         self.resetNavBar(title: "FlickrFindr")
         self.setupRecentsList()
         self.setupCollectionView()
+        
+        if self.traitCollection.forceTouchCapability == .available {
+            self.registerForPreviewing(with: self, sourceView: self.view)
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        UIView.animate(withDuration: 0.7) {
+            self.logoView.alpha = 1.0
+            self.getStartedLabel.isHidden = false
+        }
     }
     
     func setupCollectionView() {
@@ -58,14 +72,15 @@ class ViewController: UIViewController {
     }
 
     func setupRecentsList() {
-        recentsList = UITableView(frame: CGRect(x: 0.0, y: self.view.safeAreaInsets.top, width: self.view.bounds.width, height: self.view.bounds.height/2))
+        recentsList = UITableView(frame: CGRect(x: 0.0, y: 0.0, width: self.view.bounds.width, height: self.view.bounds.height/2))
         recentsList.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         recentsList.rowHeight = UITableViewAutomaticDimension
-        recentsList.estimatedRowHeight = 40
+        recentsList.estimatedRowHeight = 32
         self.view.addSubview(recentsList)
         
+        recentsList.bounces = false
         recentsList.backgroundColor = .clear
-        recentsList.separatorColor = .lightGray
+        recentsList.separatorColor = .darkGray
         
         self.sendRecentListsBack()
         
@@ -73,13 +88,15 @@ class ViewController: UIViewController {
         recentsList.delegate = self
         recentsList.dataSource = self
     }
-    
+        
     // MARK: - Helper methods
     @objc func showSearchBar() {
         self.navigationItem.titleView = self.searchBar
         self.navigationItem.title = nil
         self.navigationItem.rightBarButtonItem = nil
         self.searchBar.becomeFirstResponder()
+        self.logoView.isHidden = true
+        self.getStartedLabel.isHidden = true
         recentsList.isHidden = false
         self.view.bringSubview(toFront: recentsList)
     }
@@ -93,6 +110,8 @@ class ViewController: UIViewController {
     fileprivate func sendRecentListsBack()  {
         recentsList.isHidden = true
         self.view.sendSubview(toBack: recentsList)
+        self.logoView.isHidden = false
+        self.getStartedLabel.isHidden = false
     }
     
     fileprivate func resetSearch(searchTerm: String) {
@@ -103,6 +122,19 @@ class ViewController: UIViewController {
         self.searchManager.fetchPhotosData()
     }
     
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showDetail" {
+            guard let indexPath = sender as? IndexPath else {
+                return
+            }
+            let photo = self.photosData[indexPath.row]
+            if let detailVC = segue.destination as? PhotoDetailViewController {
+                detailVC.photo = photo
+                detailVC.photosManager = self.photosManager
+            }
+        }
+    }
 }
 // MARK: - SearchBar Delegate methods
 extension ViewController : UISearchBarDelegate {
@@ -136,6 +168,8 @@ extension ViewController : UICollectionViewDataSource, UICollectionViewDelegate,
         }
         let photo = photosData[indexPath.row]
         cell.photo = photo
+        cell.loadingIndicator.startAnimating()
+        
         if let imgData = photosManager.fetchedPhotoData(for: photo) {
             // already in cache
             cell.configure(with: photo, imgData: imgData)
@@ -155,6 +189,11 @@ extension ViewController : UICollectionViewDataSource, UICollectionViewDelegate,
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        self.performSegue(withIdentifier: "showDetail", sender: indexPath)
+    }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // only when collectionView is scrolled, new data needs to be fetched
         if scrollView == collectionView {
@@ -169,6 +208,24 @@ extension ViewController : UICollectionViewDataSource, UICollectionViewDelegate,
     }
 }
 
+extension ViewController : UIViewControllerPreviewingDelegate {
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        let indexPath = self.collectionView.indexPathForItem(at: location)!
+        let photo = self.photosData[indexPath.row]
+        if let detailVC = self.storyboard?.instantiateViewController(withIdentifier: String(describing: PhotoDetailViewController.self)) as? PhotoDetailViewController {
+            detailVC.photo = photo
+            detailVC.photosManager = self.photosManager
+            return detailVC
+        }
+        return nil
+    }
+    
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        self.show(viewControllerToCommit, sender: self)
+    }
+    
+}
+
 // MARK: - RecentSearches TableViewDelegate and DataSource methods
 extension ViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -178,8 +235,7 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RecentsCell", for: indexPath)
         cell.textLabel?.text = self.searchManager.recentSearches[indexPath.row]
-        cell.textLabel?.textColor = .lightText
-        cell.backgroundColor = .darkGray
+        cell.textLabel?.textColor = .darkText
         return cell
     }
     
@@ -187,6 +243,10 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: false)
         let searchTerm = self.searchManager.recentSearches[indexPath.row]
         self.resetSearch(searchTerm: searchTerm)
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Recent Searches"
     }
 }
 

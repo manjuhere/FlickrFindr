@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7800E9A720FF66F20027F299 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 7800E9A620FF66F20027F299 /* README.md */; };
+		7830FAFE21004CBE005FB881 /* PhotoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7830FAFD21004CBE005FB881 /* PhotoDetailViewController.swift */; };
 		783DFF3F20FCD35300866790 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783DFF3E20FCD35300866790 /* AppDelegate.swift */; };
 		783DFF4120FCD35300866790 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783DFF4020FCD35300866790 /* ViewController.swift */; };
 		783DFF4420FCD35300866790 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 783DFF4220FCD35300866790 /* Main.storyboard */; };
@@ -40,6 +41,7 @@
 
 /* Begin PBXFileReference section */
 		7800E9A620FF66F20027F299 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.markdown; };
+		7830FAFD21004CBE005FB881 /* PhotoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetailViewController.swift; sourceTree = "<group>"; };
 		783DFF3B20FCD35300866790 /* FlickrFindr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlickrFindr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		783DFF3E20FCD35300866790 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		783DFF4020FCD35300866790 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				783DFF4020FCD35300866790 /* ViewController.swift */,
+				7830FAFD21004CBE005FB881 /* PhotoDetailViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -278,6 +281,7 @@
 				783DFF4120FCD35300866790 /* ViewController.swift in Sources */,
 				783DFF3F20FCD35300866790 /* AppDelegate.swift in Sources */,
 				78D53A0A20FDC849001F37C4 /* PhotosViewLayout.swift in Sources */,
+				7830FAFE21004CBE005FB881 /* PhotoDetailViewController.swift in Sources */,
 				78D53A0320FDBC53001F37C4 /* PhotoCell.swift in Sources */,
 				783DFF5F20FCE2FD00866790 /* Constants.swift in Sources */,
 			);

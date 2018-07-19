@@ -23,10 +23,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GAT-Dj-8C7">
-                        <rect key="frame" x="0.0" y="139" width="180" height="41"/>
+                        <rect key="frame" x="0.0" y="180" width="180" height="0.0"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You are allowed to use any open-source " lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qVQ-Jw-qpm">
-                                <rect key="frame" x="4" y="0.0" width="172" height="41"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qVQ-Jw-qpm">
+                                <rect key="frame" x="4" y="0.0" width="172" height="0.0"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="41" id="7sB-wn-wSZ"/>
@@ -44,20 +44,27 @@
                             <constraint firstAttribute="bottom" secondItem="qVQ-Jw-qpm" secondAttribute="bottom" id="t5h-9w-T4H"/>
                         </constraints>
                     </view>
+                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="N4M-9U-3Yq">
+                        <rect key="frame" x="72" y="72" width="37" height="37"/>
+                        <color key="color" red="0.99960166220000002" green="0.13399264220000001" blue="0.52424538139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </activityIndicatorView>
                 </subviews>
             </view>
             <constraints>
                 <constraint firstItem="TQg-dz-035" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="C3s-Lx-1rk"/>
                 <constraint firstAttribute="trailing" secondItem="TQg-dz-035" secondAttribute="trailing" id="Hez-jN-xZU"/>
+                <constraint firstItem="N4M-9U-3Yq" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="LCX-K0-Gn1"/>
                 <constraint firstItem="TQg-dz-035" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="PiP-Qq-HX0"/>
                 <constraint firstAttribute="bottom" secondItem="GAT-Dj-8C7" secondAttribute="bottom" id="aU6-es-Qo4"/>
                 <constraint firstAttribute="trailing" secondItem="GAT-Dj-8C7" secondAttribute="trailing" id="bfK-E1-tUk"/>
                 <constraint firstItem="GAT-Dj-8C7" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="ldD-nD-TxR"/>
                 <constraint firstAttribute="bottom" secondItem="TQg-dz-035" secondAttribute="bottom" id="t5T-kA-7nt"/>
+                <constraint firstItem="N4M-9U-3Yq" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="zzL-Xn-j1l"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="173" height="199"/>
             <connections>
+                <outlet property="loadingIndicator" destination="N4M-9U-3Yq" id="qT6-dP-crf"/>
                 <outlet property="photoView" destination="TQg-dz-035" id="Rq3-GT-Kq5"/>
                 <outlet property="titleLabel" destination="qVQ-Jw-qpm" id="5nP-tc-HOo"/>
             </connections>
