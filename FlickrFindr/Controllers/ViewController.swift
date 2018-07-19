@@ -73,7 +73,7 @@ class ViewController: UIViewController {
 
     func setupRecentsList() {
         recentsList = UITableView(frame: CGRect(x: 0.0, y: 0.0, width: self.view.bounds.width, height: self.view.bounds.height/2))
-        recentsList.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        recentsList.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleTopMargin, .flexibleBottomMargin, .flexibleLeftMargin, .flexibleRightMargin]
         recentsList.rowHeight = UITableViewAutomaticDimension
         recentsList.estimatedRowHeight = 32
         self.view.addSubview(recentsList)
@@ -88,7 +88,7 @@ class ViewController: UIViewController {
         recentsList.delegate = self
         recentsList.dataSource = self
     }
-        
+    
     // MARK: - Helper methods
     @objc func showSearchBar() {
         self.navigationItem.titleView = self.searchBar
