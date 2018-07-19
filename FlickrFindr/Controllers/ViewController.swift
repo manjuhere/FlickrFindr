@@ -18,7 +18,6 @@ class ViewController: UIViewController {
     private var recentsList : UITableView!
     private var collectionView : UICollectionView!
     private var flowLayout : UICollectionViewFlowLayout!
-    private var searchTerm : String!
     
     private let photosManager = PhotosManager()
     private let searchManager = SearchManager()
@@ -42,7 +41,7 @@ class ViewController: UIViewController {
         self.setupCollectionView()
         
         if self.traitCollection.forceTouchCapability == .available {
-            self.registerForPreviewing(with: self, sourceView: self.view)
+            self.registerForPreviewing(with: self, sourceView: self.collectionView)
         }
     }
     
@@ -76,12 +75,12 @@ class ViewController: UIViewController {
         recentsList.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleTopMargin, .flexibleBottomMargin, .flexibleLeftMargin, .flexibleRightMargin]
         recentsList.rowHeight = UITableViewAutomaticDimension
         recentsList.estimatedRowHeight = 32
-        self.view.addSubview(recentsList)
         
         recentsList.bounces = false
         recentsList.backgroundColor = .clear
         recentsList.separatorColor = .darkGray
         
+        self.view.addSubview(recentsList)
         self.sendRecentListsBack()
         
         self.recentsList.register(UITableViewCell.self, forCellReuseIdentifier: "RecentsCell")
@@ -103,7 +102,15 @@ class ViewController: UIViewController {
     
     @objc func resetNavBar(title: String?) {
         self.navigationItem.titleView = nil
-        self.navigationItem.title = (title != nil) ? title! : self.searchManager.searchText
+        if title != nil {
+            self.navigationItem.title = title!
+        } else {
+            if self.searchManager.searchText != nil {
+                self.navigationItem.title = self.searchManager.searchText!
+            } else {
+                self.navigationItem.title = "FlickrFindr"
+            }
+        }
         self.navigationItem.rightBarButtonItem = searchNavBtn
     }
     

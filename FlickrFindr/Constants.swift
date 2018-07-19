@@ -38,7 +38,7 @@ struct APIConfig {
     private let API_PARAM_RESP_FORMAT = "&format=json"
     private let API_PARAM_NO_CALLBACK = "&nojsoncallback=1"
     private let API_PARAM_SAFE_SEARCH = "&safe_search=1"
-
+    private let API_PARAM_SORT_RESULT = "&sort=relevance"
     
     /// Build Search URL using query parameters and given search inputs
     ///
@@ -49,7 +49,15 @@ struct APIConfig {
     func getSearchURL(searchText: String, page: Int? = nil) -> String {
         var searchParam = "&text=\(searchText)"
         searchParam = searchParam.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
-        var URL = API_ENDPOINT + API_PARAM_METHOD + API_PARAM_KEY + API_PARAM_RESP_FORMAT + API_PARAM_NO_CALLBACK + API_PARAM_SAFE_SEARCH + searchParam
+        var URL = API_ENDPOINT
+            + API_PARAM_METHOD
+            + API_PARAM_KEY
+            + API_PARAM_RESP_FORMAT
+            + API_PARAM_NO_CALLBACK
+            + API_PARAM_SAFE_SEARCH
+            + API_PARAM_SORT_RESULT
+            + searchParam
+        
         if page != nil {
             let pageParam = "&page=\(page!)"
             URL = URL + pageParam
